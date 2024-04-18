@@ -1,0 +1,1 @@
+Prompt set version/model, character/style input, built-in selfies, prompt gallery, download w prompt embed, site/server browser 
