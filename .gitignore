@@ -2,3 +2,4 @@
 config.py
 NOTES.md
 /__pycache__
+/output
