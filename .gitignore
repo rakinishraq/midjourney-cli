@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 /.venv
+=======
+/.venv
+config.py
+NOTES.md
+/__pycache__
+/output
+>>>>>>> f275a8a76b170ee3a9ac2ec79d710d9cd835367b

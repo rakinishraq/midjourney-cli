@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import os
 import requests
 import traceback
@@ -90,6 +91,11 @@ portrait = [
     "https://i.postimg.cc/Prw48YVn/image.jpg"
 ][:2]
 alt = [[ # https://postimg.cc/gallery/ZTdXhpS/98cad494
+=======
+import midjourney
+
+unis = [[ # https://postimg.cc/gallery/ZTdXhpS/98cad494
+>>>>>>> f275a8a76b170ee3a9ac2ec79d710d9cd835367b
     "https://i.postimg.cc/HLPdJr8S/0.png", 
 	"https://i.postimg.cc/Ss2qcmWm/1.png", 
 	"https://i.postimg.cc/50hJ3D3L/2.png", 
@@ -107,6 +113,7 @@ alt = [[ # https://postimg.cc/gallery/ZTdXhpS/98cad494
 	"https://i.postimg.cc/1tqhfJQt/14.png", 
 	"https://i.postimg.cc/cJjGxPP2/15.png", 
 ][i] for i in [1, 12, 10, 14, 11]]
+<<<<<<< HEAD
 """
 #prompt = lina+" short ponytail hair, young woman, dynamic action poses, full body, indian, black ninja outfit, pretty, cute, full body --niji 6 --sref https://i.postimg.cc/W4k7dRBk/image.png --sw 500"
 #prompt = "silver hair, woman, character sheet, full body, multiple poses and expressions, black ninja outfit, cute asian, relaxed, pretty eyes, simple cartoon style --niji 6 --seed 1715235611"
@@ -125,3 +132,35 @@ alt = [[ # https://postimg.cc/gallery/ZTdXhpS/98cad494
 #track("9d1ac625-a0c9-4f83-8133-68bff6fe28a7")
 #scan_ids()
 
+=======
+lina = [[
+    "https://i.postimg.cc/PJV0ys2M/1.png",
+    "https://i.postimg.cc/hPhkjvtZ/2.png",
+    "https://i.postimg.cc/15TLNSgm/3.png",
+    "https://i.postimg.cc/Cxq9G2Dj/4.png",
+    "https://i.postimg.cc/7LrdmNMj/5.png",
+    "https://i.postimg.cc/mr3qqFmk/6.png"
+][i] for i in [0, 2, 3, 4, 5]]
+
+
+persona = [
+    "https://i.postimg.cc/43vXPLZz/Joker-Persona-5-600-3993730.jpg::1",
+    "https://i.postimg.cc/qvdYwk75/Shin-Megami-Tensei-PERSONA-5-600-2160093.jpg::1",
+    "https://i.postimg.cc/P5z7FBpr/913616.png::1",
+    "https://i.postimg.cc/NjZGkTc6/4k-version-of-the-official-p3re-art-for-wallpapers-and-such-v0-rs7t7e32oxjb1.webp::1",
+	"https://i.postimg.cc/TPmd7wdZ/vrmf7qtu83gc1.jpg::1"
+]
+wlop = [
+    "https://i.postimg.cc/CMv4gNsw/de1yw9w-905ef3c0-5fd6-4aef-9f07-d6e8417fad2c.jpg::1",
+	"https://i.postimg.cc/7YfnY2K0/detefg1-b4da83de-3b6e-46ea-8a98-275a7ed7300e.jpg::1"
+]
+spiderverse = [
+    "https://i.postimg.cc/T1YfmtgC/Bert-Spider-Verse.jpg",
+	"https://i.postimg.cc/kgkJZFPg/gwen-stacy-spider-gwen-aka-ghost-spider.jpg",
+    
+]
+
+sref = '--sw 800 --sref ' + ' '.join(spiderverse)
+cref = '--cref ' + ' '.join(lina)
+print(midjourney.generate(f"anime girl, white hair, ninja outfit, pretty, digital painting, dramatic, dynamic pose {cref} {sref}"))
+>>>>>>> f275a8a76b170ee3a9ac2ec79d710d9cd835367b
