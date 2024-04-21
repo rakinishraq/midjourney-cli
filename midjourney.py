@@ -70,7 +70,6 @@ def generate(prompt):
 
 
 def main():
-    #print(generate("gothic business card design, aesthetic, minimalist, with QR code, letter R logo, rectangle"))
     pass
 
 
