@@ -1,76 +1,69 @@
-import os
-import requests
-import traceback
-from pprint import pprint
-from time import sleep
-from PIL import Image
-import io
-import piexif
-import webbrowser
 import config
-import json
+import requests
+from time import sleep
+import webbrowser
  
+verbose = print 
+
+def is_valid_url(url):
+    if not url: return False
+    try:
+        response = requests.get(url)
+        return response.status_code == 200
+    except requests.exceptions.RequestException as e:
+        if verbose: print(f"Invalid URL: {url}. Error: {e}")
+        return False
+
 
 headers = {"X-API-KEY": config.API_KEY}
-def goapi(endpoint, verbose=False, **kwargs):
+# ADD WEBHOOK AND BOT_ID HANDLING HERE
+def goapi(endpoint, **kwargs):
     url = "https://api.midjourneyapi.xyz/mj/v2/"+endpoint
-    if verbose: print(url, kwargs)
+    verbose(url, kwargs)
 
     response = requests.post(url, headers=headers, json=kwargs)
     json = response.json()
-    if verbose: print(response.status_code, json)
+    verbose(response.status_code, json)
     return json
 
 
-def generate(prompt):
-    init_print = False
-    output = goapi("imagine", prompt=prompt, aspect_ratio="4:3", process_mode="fast")
-    id = output["task_id"]
+def imagine(prompt, aspect_ratio="1:1", process_mode="fast",
+            cref=[], cw=100, sref=[], sw=100,
+            bot_id=None, skip_prompt_check=False):
+    """
+    prompt (str): The prompt for image processing
+    aspect_ratio (str): Aspect ratio of the image (relax/fast/turbo)
+    process_mode (str): Which mode to use for processing
+    cref (list): List of character references
+    cw (int): Overall weight of character references
+    sref (list): List of style references (can be list of tuples with weights)
+    sw (int): Overall weight of style references
+    bot_id (str): Force task processing on specific Discord account
+    """
 
-    if not id: return output
-
-    status = "started"
-    print("loading: https://img.midjourneyapi.xyz/mj/%s.png" % id)
+    if sref:
+        sref_strings = ['--sref']
+        for r in sref:
+            if isinstance(r, tuple):
+                sref_strings.append(f"{r[0]}:{r[1]}")
+            else:
+                sref_strings.append(r)
+        if sw: sref_strings.extend(('--sw', str(sw)))
+        prompt += ' ' + ' '.join(sref_strings)
     
-    while status != "finished":
-        output = goapi("fetch", task_id=id)
-        status = output["status"]
-        if not init_print:
-            print(output)
-            init_print = True
+    if cref:
+        prompt += ' --cref ' + ' '.join(cref)
+        if cw: prompt += ' --cw ' + cw
 
-        if status == "failed": return
-        
-        if status == "finished":
-            id = goapi("seed", task_id=id)["task_id"]
-            init_print = False
-            status = "pending"
-
-            while status in ["pending", "processing"]:
-                output = goapi("fetch", task_id=id)
-                status = output["status"]
-                if not init_print:
-                    print(output)
-                    init_print = True
-                sleep(1)
-            
-            print("done:", url := output["task_result"]["image_url"])
-            response = requests.get(url)
-            if not os.path.exists("output"):
-                os.makedirs("output")
-            with open(f'output/{id}.png', 'wb') as f:
-                f.write(response.content)
-            with open(f'output/{id}.json', 'w') as f:
-                json.dump(output, f, indent=4)
-
-            #webbrowser.open(url)
-            return output
-        sleep(1)
-
+    out = goapi("imagine", prompt=prompt,
+                aspect_ratio=aspect_ratio,
+                process_mode=process_mode)
+    id = out["task_id"]
+    if not id: return out
 
 
 def main():
-    pass
+    imagine("test")
 
 
 if __name__ == "__main__":

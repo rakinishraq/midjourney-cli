@@ -47,4 +47,4 @@ spiderverse = [
 
 sref = '--sw 800 --sref ' + ' '.join(spiderverse)
 cref = '--cref ' + ' '.join(lina)
-print(midjourney.generate(f"anime girl, white hair, ninja outfit, pretty, digital painting, dramatic, dynamic pose {cref} {sref}"))
+#print(midjourney.generate(f"anime girl, white hair, ninja outfit, pretty, digital painting, dramatic, dynamic pose {cref} {sref}"))
