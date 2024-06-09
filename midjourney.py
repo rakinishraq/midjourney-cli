@@ -94,9 +94,11 @@ def imagine(prompt, aspect_ratio="1:1", process_mode="fast",
             break
 
         sleep(1)
+    
+    return id
 
 def main():
-    if not os.path.exists("output"):
+    if not os.path.exists("output"): # TODO: globalize
         os.makedirs("output")
     imagine("artistic, business card, strong typography, eye-catching, minimal, QR code, silver foil")
 
